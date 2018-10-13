@@ -1,3 +1,7 @@
+// ====================
+// actions
+// ====================
+
 // action types
 export const API_REQUEST = 'API_REQUEST'
 export const API_SUCCESS = 'API_SUCCESS'
@@ -29,5 +33,23 @@ export function apiError({ error, feature }) {
     type: `${feature} ${API_ERROR}`,
     payload: error,
     meta: { feature },
+  }
+}
+
+// ====================
+// middlewares
+// ====================
+export const apiMiddleware = ({ dispatch }) => next => async action => {
+  next(action)
+  if (action.type.includes(API_REQUEST)) {
+    const { url, method, feature } = action.meta
+
+    try {
+      const response = await fetch(url, { method })
+      const data = await response.json()
+      dispatch(apiSuccess({ data, feature }))
+    } catch (error) {
+      dispatch(apiError({ error, feature }))
+    }
   }
 }

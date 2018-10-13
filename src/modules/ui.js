@@ -9,3 +9,22 @@ export function setLoader({ state, feature }) {
     meta: { feature },
   }
 }
+
+// ====================
+// reducers
+// ====================
+const initialState = {
+  loading: false,
+}
+
+export function uiReducer(ui = initialState, action) {
+  switch (true) {
+    case action.type.includes(SET_LOADER):
+      return {
+        ...ui,
+        loading: action.payload,
+      }
+    default:
+      return ui
+  }
+}
