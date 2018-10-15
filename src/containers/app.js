@@ -5,9 +5,9 @@ const mapStateToProps = state => ({
   state,
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = (/*dispatch*/) => ({})
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component)

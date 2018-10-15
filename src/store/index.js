@@ -1,9 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 
-import { booksReducer, booksMiddleware } from '../modules/books'
+import { booksReducer } from '../modules/books'
 import { notificationReducer } from '../modules/notification'
 import { uiReducer } from '../modules/ui'
-import { apiMiddleware } from '../modules/api'
+
+import { booksMiddleware } from '../middlewares/feature'
+import { apiMiddleware } from '../middlewares/core'
 
 const rootReducer = combineReducers({
   books: booksReducer,
@@ -18,7 +20,7 @@ const featureMiddleware = [booksMiddleware]
 const coreMiddleware = [apiMiddleware]
 
 const enhancer = compose(
-  applyMiddleware(...featureMiddleware, ...coreMiddleware),
+  applyMiddleware(...featureMiddleware, ...coreMiddleware)
 )
 
 const store = createStore(rootReducer, {}, enhancer)
